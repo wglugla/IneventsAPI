@@ -2,16 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Contracts
 {
     // public interface for Users Repository
     public interface IUsersRepository : IRepositoryBase<User>
     {
-        IEnumerable<object> GetAllUsers();
-        User GetUserById(int userId);
-        void CreateUser(User user);
-        void DeleteUser(User user);
-        User GetUserByUsername(string username);
-    }
+        Task<IEnumerable<object>> GetAllUsersAsync();
+        Task<User> GetUserByIdAsync(int userId);
+        Task CreateUserAsync(User user);
+        Task DeleteUserAsync(User user);
+        Task<User> GetUserByUsernameAsync(string username);
+    }   
 }

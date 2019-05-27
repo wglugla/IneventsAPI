@@ -25,11 +25,11 @@ namespace server.Controllers
 
         // GET api/users
         [HttpGet]
-        public IActionResult GetAllUsers()
+        public async Task<IActionResult> GetAllUsers()
         {
             try
             {
-                var users = _repository.User.GetAllUsers();
+                var users = await _repository.User.GetAllUsersAsync();
 
                 _logger.LogInfo($"Returned all owners from database.");
 
@@ -45,11 +45,11 @@ namespace server.Controllers
         // GET api/users/5
         // TODO: schować hasło!!
         [HttpGet("{id}", Name = "UserById")]
-        public IActionResult GetUserById(int id)
+        public async Task<IActionResult> GetUserById(int id)
         {
             try
             {
-                var user = _repository.User.GetUserById(id);
+                var user = await _repository.User.GetUserByIdAsync(id);
 
                 if (user.Id.Equals(0))
                 {
@@ -68,7 +68,7 @@ namespace server.Controllers
 
         // POST api/users
         [HttpPost]
-        public IActionResult CreateUser([FromBody]User user)
+        public async Task<IActionResult> CreateUser([FromBody]User user)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace server.Controllers
                 user.Create_time = DateTime.Now;
                 Encryption en = new Encryption();
                 user.Password = en.Encrypt(user.Password);
-                _repository.User.CreateUser(user);
+                await _repository.User.CreateUserAsync(user);
                 _repository.Save();
                 
                 // return 201 status
@@ -101,18 +101,18 @@ namespace server.Controllers
 
         // DELETE api/users
         [HttpDelete("{id}")]
-        public IActionResult DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
             try
             {
-                var user = _repository.User.GetUserById(id);
+                var user = await _repository.User.GetUserByIdAsync(id);
                 if (user == null)
                 {
                     _logger.LogError($"User with id {id}, hasn't been found in database");
                     return NotFound();
                 }
 
-                _repository.User.DeleteUser(user);
+                await _repository.User.DeleteUserAsync(user);
                 _repository.Save();
 
                 _logger.LogInfo($"Used with id {id} deleted");

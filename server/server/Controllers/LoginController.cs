@@ -33,10 +33,10 @@ namespace server.Controllers
 
         // [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login([FromBody] User userData)
+        public async Task<IActionResult> Login([FromBody] User userData)
         {
             IActionResult response = Unauthorized();
-            var user = AuthenticateUser(userData);
+            var user = await AuthenticateUser(userData);
             if (user != null)
             {
                 var tokenString = GenerateJSONWebToken(user);
@@ -59,12 +59,12 @@ namespace server.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private User AuthenticateUser(User login)
+        private async Task<User> AuthenticateUser(User login)
         {
             Encryption en = new Encryption();
             User user = null;
             string hashedPassword = login.Password;
-            user = _repository.User.GetUserByUsername(login.Username);
+            user = await _repository.User.GetUserByUsernameAsync(login.Username);
             if (en.Auth(hashedPassword, user.Password))
             {
                 return user;

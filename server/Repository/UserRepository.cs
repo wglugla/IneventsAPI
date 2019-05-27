@@ -1,10 +1,12 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Repository
 {
@@ -14,36 +16,38 @@ namespace Repository
         {
         }
 
-        public IEnumerable<object> GetAllUsers()
+        public async Task<IEnumerable<object>> GetAllUsersAsync()
         {
-            return FindAll()
+            return await FindAll()
                 .Select(p => new {
                     p.Id,
                     p.Username,
                     p.Name,
                     p.Surname,
                     p.Create_time
-                });
+                }).ToListAsync();
         }
 
-        public User GetUserById(int userId)
+        public async Task<User> GetUserByIdAsync(int userId)
         {
-            return FindByCondition(user => user.Id.Equals(userId)).DefaultIfEmpty(new User()).FirstOrDefault();
+            return await FindByCondition(user => user.Id.Equals(userId)).DefaultIfEmpty(new User()).FirstOrDefaultAsync();
         }
 
-        public void CreateUser(User user)
+        public async Task CreateUserAsync(User user)
         {
             Create(user);
+            await SaveAsync();
         }
 
-        public void DeleteUser(User user)
+        public async Task DeleteUserAsync(User user)
         {
             Delete(user);
+            await SaveAsync();
         }
 
-        public User GetUserByUsername(string username)
+        public async Task<User> GetUserByUsernameAsync(string username)
         {
-            return FindByCondition(user => user.Username == username).DefaultIfEmpty(new User()).FirstOrDefault();
+            return await FindByCondition(user => user.Username == username).DefaultIfEmpty(new User()).FirstOrDefaultAsync();
         }
     }
 }
