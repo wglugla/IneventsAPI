@@ -40,5 +40,10 @@ namespace Repository
         {
             Delete(user);
         }
+
+        public User GetUserByUsername(string username)
+        {
+            return FindByCondition(user => user.Username == username).DefaultIfEmpty(new User()).FirstOrDefault();
+        }
     }
 }

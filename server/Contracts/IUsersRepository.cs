@@ -12,5 +12,6 @@ namespace Contracts
         User GetUserById(int userId);
         void CreateUser(User user);
         void DeleteUser(User user);
+        User GetUserByUsername(string username);
     }
 }

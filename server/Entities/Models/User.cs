@@ -19,12 +19,12 @@ namespace Entities.Models
         [Column("username")]
         public string Username { get; set; }
 
-        [Required(ErrorMessage = "Name is required")]
+        //[Required(ErrorMessage = "Name is required")]
         [StringLength(45, ErrorMessage = "Name can't be longer than 45 characters")]
         [Column("name")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Surname is required")]
+        //[Required(ErrorMessage = "Surname is required")]
         [StringLength(45, ErrorMessage = "Surname can't be longer than 45 characters")]
         [Column("surname")]
         public string Surname { get; set; }
