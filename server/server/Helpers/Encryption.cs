@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Contracts;
+using Entities.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -9,6 +11,12 @@ namespace server.Helpers
     public class Encryption
     {
         private byte[] salt;
+        private IRepositoryWrapper _repository;
+
+        public Encryption(IRepositoryWrapper repository)
+        {
+            _repository = repository;
+        }
 
         public void GenerateSalt()
         {
@@ -47,6 +55,18 @@ namespace server.Helpers
                 return true;
             }
             return false;
+        }
+
+        public async Task<User> AuthenticateUser(User login)
+        {
+            User user = null;
+            string hashedPassword = login.Password;
+            user = await _repository.User.GetUserByUsernameAsync(login.Username);
+            if (Auth(hashedPassword, user.Password))
+            {
+                return user;
+            }
+            return null;
         }
 
     }

@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Contracts;
 using LoggerServices;
 using server.Helpers;
+using Authorization;
 
 namespace server.Controllers
 {
@@ -23,53 +24,29 @@ namespace server.Controllers
         private IConfiguration _config;
         private IRepositoryWrapper _repository;
         private ILoggerManager _logger;
+        private JWToken JWT;
+        private Encryption encryptor;
 
         public LoginController(IConfiguration config, IRepositoryWrapper repository, ILoggerManager logger)
         {
             _config = config;
             _repository = repository;
             _logger = logger;
+            JWT = new JWToken(config);
+            encryptor = new Encryption(repository);
         }
 
-        // [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] User userData)
         {
             IActionResult response = Unauthorized();
-            var user = await AuthenticateUser(userData);
+            var user = await encryptor.AuthenticateUser(userData);
             if (user != null)
             {
-                var tokenString = GenerateJSONWebToken(user);
+                var tokenString = JWT.GenerateJSONWebToken(user);
                 response = Ok(new { token = tokenString });
             }
             return response;
-        }
-
-        private string GenerateJSONWebToken(User userInfo)
-        {
-            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-                _config["Jwt:Issuer"],
-                null,
-                expires: DateTime.Now.AddMinutes(120),
-                signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        private async Task<User> AuthenticateUser(User login)
-        {
-            Encryption en = new Encryption();
-            User user = null;
-            string hashedPassword = login.Password;
-            user = await _repository.User.GetUserByUsernameAsync(login.Username);
-            if (en.Auth(hashedPassword, user.Password))
-            {
-                return user;
-            }
-            return null;
         }
     }
 }

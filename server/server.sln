@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{A5FC1EC5-D4B9-4023-A30D-E5AB18856D67}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization", "Authorization\Authorization.csproj", "{947E9013-5916-4C84-942E-D965D2C87C02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A5FC1EC5-D4B9-4023-A30D-E5AB18856D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5FC1EC5-D4B9-4023-A30D-E5AB18856D67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5FC1EC5-D4B9-4023-A30D-E5AB18856D67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{947E9013-5916-4C84-942E-D965D2C87C02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{947E9013-5916-4C84-942E-D965D2C87C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{947E9013-5916-4C84-942E-D965D2C87C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{947E9013-5916-4C84-942E-D965D2C87C02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

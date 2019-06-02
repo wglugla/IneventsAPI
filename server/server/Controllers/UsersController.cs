@@ -88,7 +88,7 @@ namespace server.Controllers
                     return BadRequest("Invalid model object");
                 }
                 user.Create_time = DateTime.Now;
-                Encryption en = new Encryption();
+                Encryption en = new Encryption(_repository);
                 user.Password = en.Encrypt(user.Password);
                 await _repository.User.CreateUserAsync(user);
                 _repository.Save();
