@@ -30,7 +30,7 @@ namespace Repository
 
         public async Task<User> GetUserByIdAsync(int userId)
         {
-            return await FindByCondition(user => user.Id.Equals(userId)).DefaultIfEmpty(new User()).FirstOrDefaultAsync();
+            return await FindByCondition(user => user.Id.Equals(userId)).FirstOrDefaultAsync();
         }
 
         public async Task CreateUserAsync(User user)
@@ -47,7 +47,7 @@ namespace Repository
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
-            return await FindByCondition(user => user.Username == username).DefaultIfEmpty(new User()).FirstOrDefaultAsync();
+            return await FindByCondition(user => user.Username == username).FirstOrDefaultAsync();
         }
     }
 }

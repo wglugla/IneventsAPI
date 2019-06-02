@@ -43,21 +43,25 @@ namespace server.Controllers
         }
 
         // GET api/users/5
-        // TODO: schować hasło!!
         [HttpGet("{id}", Name = "UserById")]
         public async Task<IActionResult> GetUserById(int id)
         {
             try
             {
-                var user = await _repository.User.GetUserByIdAsync(id);
-
+                User user = await _repository.User.GetUserByIdAsync(id);
+                ProtectedUser response = new ProtectedUser();
+                response.Id = user.Id;
+                response.Username = user.Username;
+                response.Name = user.Name;
+                response.Surname = user.Surname;
+                response.Create_time = user.Create_time;
                 if (user.Id.Equals(0))
                 {
                     return NotFound();
                 }
                 else
                 {
-                    return Ok(user);
+                    return Ok(response);
                 }
             }
             catch (Exception)
