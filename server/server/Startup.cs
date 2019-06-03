@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using server.Extensions;
+﻿using Contracts;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.HttpOverrides;
-using NLog;
-using NLog.Extensions.Logging;
-using System.IO;
-using Contracts;
-using Repository;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using NLog;
+using Repository;
+using server.Extensions;
+using System;
+using System.IO;
 using System.Text;
 
 namespace server
@@ -71,6 +65,13 @@ namespace server
             // Configure MySql Context
             services.ConfigureMySqlContext(Configuration);
 
+            // swagger
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Inevent API", Description = "Swagger Inevent API" });
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,6 +97,13 @@ namespace server
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc();
+
+            // run swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+           {
+               c.SwaggerEndpoint("/swagger/v1/swagger.json", "Inevent API");
+           });
         }
     }
 }
