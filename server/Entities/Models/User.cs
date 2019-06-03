@@ -11,7 +11,7 @@ namespace Entities.Models
     public class User
     {
         [Key]
-        [Column("id")]
+        [Column("user_id")]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Username is required")]
@@ -33,7 +33,5 @@ namespace Entities.Models
         [StringLength(255, ErrorMessage = "Password can't be longer than 255 characters")]
         [Column("password")]
         public string Password { get; set; }
-
-        public DateTime Create_time { get; set; }
     }
 }

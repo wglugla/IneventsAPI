@@ -24,7 +24,6 @@ namespace Repository
                     p.Username,
                     p.Name,
                     p.Surname,
-                    p.Create_time
                 }).ToListAsync();
         }
 

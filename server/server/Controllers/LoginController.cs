@@ -40,13 +40,24 @@ namespace server.Controllers
         public async Task<IActionResult> Login([FromBody] User userData)
         {
             IActionResult response = Unauthorized();
-            var user = await encryptor.AuthenticateUser(userData);
-            if (user != null)
+            try
             {
-                var tokenString = JWT.GenerateJSONWebToken(user);
-                response = Ok(new { token = tokenString });
+                var user = await encryptor.AuthenticateUser(userData);
+                if (user != null)
+                {
+                    var tokenString = JWT.GenerateJSONWebToken(user);
+                    response = Ok(new {id = user.Id, token = tokenString });
+                }
+                else
+                {
+                    response = Unauthorized();
+                }
+                return response;
             }
-            return response;
+            catch (Exception e)
+            {
+                return StatusCode(500, "Internal server error" + e);
+            }
         }
     }
 }

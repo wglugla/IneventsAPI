@@ -61,12 +61,20 @@ namespace server.Helpers
         {
             User user = null;
             string hashedPassword = login.Password;
-            user = await _repository.User.GetUserByUsernameAsync(login.Username);
-            if (Auth(hashedPassword, user.Password))
+            try
             {
-                return user;
+                user = await _repository.User.GetUserByUsernameAsync(login.Username);
+                if (Auth(hashedPassword, user.Password))
+                {
+                    return user;
+                }
+                return null;
             }
-            return null;
+            catch (Exception)
+            {
+                return null;
+            }
+            
         }
 
     }

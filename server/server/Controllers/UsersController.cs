@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Contracts;
 using Entities.Models;
 using LoggerServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using server.Helpers;
 
@@ -38,35 +39,39 @@ namespace server.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside GetAllOwners action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, "Internal server error" + ex);
             }
         }
 
         // GET api/users/5
+        // Authentication: bearer token!
         [HttpGet("{id}", Name = "UserById")]
+        [Authorize]
         public async Task<IActionResult> GetUserById(int id)
         {
             try
             {
                 User user = await _repository.User.GetUserByIdAsync(id);
-                ProtectedUser response = new ProtectedUser();
-                response.Id = user.Id;
-                response.Username = user.Username;
-                response.Name = user.Name;
-                response.Surname = user.Surname;
-                response.Create_time = user.Create_time;
+                _logger.LogInfo(user.Id.ToString());
                 if (user.Id.Equals(0))
                 {
-                    return NotFound();
+                    return NotFound("test");
                 }
                 else
                 {
-                    return Ok(response);
+                    object result = new
+                    {
+                        user.Id,
+                        user.Username,
+                        user.Name,
+                        user.Surname,
+                    };
+                    return Ok(result);
                 }
             }
             catch (Exception)
             {
-                return StatusCode(500, "Internal server error");
+                return NotFound();
             }
         }
 
@@ -87,7 +92,6 @@ namespace server.Controllers
                     _logger.LogError("Invalid user object sent from client");
                     return BadRequest("Invalid model object");
                 }
-                user.Create_time = DateTime.Now;
                 Encryption en = new Encryption(_repository);
                 user.Password = en.Encrypt(user.Password);
                 await _repository.User.CreateUserAsync(user);
