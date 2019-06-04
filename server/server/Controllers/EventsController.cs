@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Contracts;
+using Entities.Models;
 using LoggerServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using server.Helpers;
 
 namespace server.Controllers
 {
@@ -29,7 +32,6 @@ namespace server.Controllers
             try
             {
                 var events = await _repository.Event.GetAllEventsAsync();
-
                 _logger.LogInfo($"Returned all owners from database.");
 
                 return Ok(events);
@@ -41,12 +43,31 @@ namespace server.Controllers
             }
         }
 
-        //// GET: api/Events/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        // GET: api/Events/5
+        [HttpGet("{id}", Name =  "EventById")]
+        public async Task<IActionResult> GetEventById(int id)
+        {
+            try
+            {
+                Event res = await _repository.Event.GetEventByIdAsync(id);
+                int[] tagsId = await _repository.EventsTags.GetEventTagsAsync(res.Id);
+                List<Tag> tags = new List<Tag>();
+                foreach(int tagId in tagsId)
+                {
+                    Tag newTag = await _repository.Tag.GetTagByIdAsync(tagId);
+                    tags.Add(newTag);
+                }
+                EventDetails details = new EventDetails(res, tags.Select(p => p.Value).ToArray());
+                _logger.LogInfo($"Returned event by id from database.");
+
+                return Ok(details);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetEventById action: {ex.Message}");
+                return StatusCode(500, "Internal server error" + ex);
+            }
+        }
 
         //// POST: api/Events
         //[HttpPost]

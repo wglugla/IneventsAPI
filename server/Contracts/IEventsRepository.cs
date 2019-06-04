@@ -9,7 +9,7 @@ namespace Contracts
     public interface IEventsRepository : IRepositoryBase<Event>
     {
         Task<IEnumerable<object>> GetAllEventsAsync();
-        Task<User> GetEventByIdAsync(int eventId);
+        Task<Event> GetEventByIdAsync(int eventId);
         Task CreateEventAsync(Event eventTarget);
         Task DeleteEventAsync(Event eventTarget);
     }

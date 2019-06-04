@@ -29,6 +29,11 @@ namespace Repository
             }).ToListAsync();
         }
 
+        public async Task<Event> GetEventByIdAsync(int eventId)
+        {
+            return await FindByCondition(p => p.Id.Equals(eventId)).FirstOrDefaultAsync();
+        }
+
 
         public Task CreateEventAsync(Event eventTarget)
         {
@@ -40,11 +45,5 @@ namespace Repository
             throw new NotImplementedException();
         }
 
-        
-
-        public Task<User> GetEventByIdAsync(int eventId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

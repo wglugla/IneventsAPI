@@ -12,6 +12,7 @@ namespace Repository
         private IUsersRepository _user;
         private IEventsRepository _event;
         private ITagsRepository _tag;
+        private IEventsTagsRepository _eventstags;
 
         public IUsersRepository User {
             get
@@ -47,6 +48,19 @@ namespace Repository
                 return _tag;
             }
         }
+
+        public IEventsTagsRepository EventsTags
+        {
+            get
+            {
+                if (_eventstags == null)
+                {
+                    _eventstags = new EventsTagsRepository(_repoContext);
+                }
+                return _eventstags;
+            }
+        }
+
 
         public RepositoryWrapper(RepositoryContext repositoryContext)
         {
