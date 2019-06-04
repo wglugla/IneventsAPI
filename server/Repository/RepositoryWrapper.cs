@@ -10,6 +10,7 @@ namespace Repository
     {
         private RepositoryContext _repoContext;
         private IUsersRepository _user;
+        private IEventsRepository _event;
 
         public IUsersRepository User {
             get
@@ -20,6 +21,18 @@ namespace Repository
                 }
                 return _user;
             }   
+        }
+
+        public IEventsRepository Event
+        {
+            get
+            {
+                if (_event == null)
+                {
+                    _event = new EventsRepository(_repoContext);
+                }
+                return _event;
+            }
         }
 
         public RepositoryWrapper(RepositoryContext repositoryContext)

@@ -13,5 +13,7 @@ namespace Entities
         // model as table in database
         public DbSet<User> User { get; set; }
 
+        public DbSet<Event> Event { get; set; }
+
     }
 }
