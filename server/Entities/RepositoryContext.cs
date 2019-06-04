@@ -15,5 +15,7 @@ namespace Entities
 
         public DbSet<Event> Event { get; set; }
 
+        public DbSet<Tag> Tag { get; set; }
+
     }
 }
