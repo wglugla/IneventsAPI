@@ -75,6 +75,42 @@ namespace server.Controllers
             }
         }
 
+        // GET api/users/{id}/signed
+        [HttpGet("{id}/signed")]
+        public async Task<IActionResult> GetUserSignedEvents(int id)
+        {
+            try
+            {
+                int[] signedEventsid = await _repository.UsersEvents.GetUsersEventsAsync(id);
+                List<Event> events = new List<Event>();
+                foreach (int i in signedEventsid)
+                {
+                    Event e = await _repository.Event.GetEventByIdAsync(i);
+                    events.Add(e);
+                }
+                return Ok(events);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
+        // GET api/users/{id}/signedId
+        [HttpGet("{id}/signedId")]
+        public async Task<IActionResult> GetUserSignedEventsId(int id)
+        {
+            try
+            {
+                int[] signedEventsId = await _repository.UsersEvents.GetUsersEventsAsync(id);
+                return Ok(signedEventsId);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
         // POST api/users
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody]User user)

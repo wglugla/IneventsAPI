@@ -10,6 +10,7 @@ namespace Contracts
         IEventsRepository Event { get; }
         ITagsRepository Tag { get; }
         IEventsTagsRepository EventsTags { get; }
+        IUsersEventsRepository UsersEvents { get; }
         void Save();
     }
 }
