@@ -69,6 +69,51 @@ namespace server.Controllers
             }
         }
 
+        // POST: api/events/addmember
+        [HttpPost("{eventId}/addmember")]
+        public async Task<IActionResult> AddMember(int eventId, [FromBody]UsersEvents userId)
+        {
+            try
+            {
+                int[] obj = await _repository.UsersEvents.GetUsersEventsAsync(userId.UserId);
+                for (int i=0; i<obj.Length; i++)
+                {
+                    if (obj[i] == eventId)
+                    {
+                        return BadRequest("User is already a member!");
+                    }
+                }
+                await _repository.UsersEvents.AddMemberAsync(userId.UserId, eventId);
+                _repository.Save();
+
+                // return 201 status
+                return CreatedAtRoute("UserById", userId, userId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Something went wrong inside AddMember action: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        // DELETE: api/events/removemember
+        [HttpDelete("{eventId}/removemember/{userId}")]
+        public async Task<IActionResult> RemoveMember(int eventId, int userId)
+        {
+            try
+            {
+                await _repository.UsersEvents.RemoveMemberAsync(userId, eventId);
+                _repository.Save();
+
+                return Ok("User successfully removed");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Something went wrong inside RemoveMember action: {e.Message}");
+                return StatusCode(500, "Internal server error" + e);
+            }
+        }
+
         //// POST: api/Events
         //[HttpPost]
         //public void Post([FromBody] string value)
