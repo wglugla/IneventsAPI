@@ -14,6 +14,7 @@ namespace Repository
         private ITagsRepository _tag;
         private IEventsTagsRepository _eventstags;
         private IUsersEventsRepository _usersevents;
+        private IUsersTagsRepository _userstags;
 
         public IUsersRepository User {
             get
@@ -74,6 +75,17 @@ namespace Repository
             }
         }
 
+        public IUsersTagsRepository UsersTags
+        {
+            get
+            {
+                if (_userstags == null)
+                {
+                    _userstags = new UsersTagsRepository(_repoContext);
+                }
+                return _userstags;
+            }
+        }
 
         public RepositoryWrapper(RepositoryContext repositoryContext)
         {

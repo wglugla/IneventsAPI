@@ -11,6 +11,7 @@ namespace Contracts
         ITagsRepository Tag { get; }
         IEventsTagsRepository EventsTags { get; }
         IUsersEventsRepository UsersEvents { get; }
+        IUsersTagsRepository UsersTags { get; }
         void Save();
     }
 }

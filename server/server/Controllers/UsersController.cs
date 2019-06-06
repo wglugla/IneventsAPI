@@ -7,6 +7,7 @@ using Entities.Models;
 using LoggerServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using server.Helpers;
 
 namespace server.Controllers
@@ -46,7 +47,7 @@ namespace server.Controllers
         // GET api/users/5
         // Authentication: bearer token!
         [HttpGet("{id}", Name = "UserById")]
-        [Authorize]
+        // [Authorize]
         public async Task<IActionResult> GetUserById(int id)
         {
             try
@@ -111,6 +112,21 @@ namespace server.Controllers
             }
         }
 
+        // GET api/users/{id}/tags
+        [HttpGet("{id}/tags")]
+        public async Task<IActionResult> GetUserTags(int id)
+        {
+            try
+            {
+                int[] userTagsId = await _repository.UsersTags.GetUserTagsAsync(id);
+                Tag[] userTags = await _repository.Tag.FindByCondition(p => userTagsId.Contains(p.Id)).ToArrayAsync();
+                return Ok(userTags);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
         // POST api/users
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody]User user)
