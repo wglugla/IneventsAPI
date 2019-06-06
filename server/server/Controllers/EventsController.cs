@@ -8,6 +8,7 @@ using Entities.Models;
 using LoggerServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using server.Helpers;
 
 namespace server.Controllers
@@ -39,6 +40,23 @@ namespace server.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside GetAllOwners action: {ex.Message}");
+                return StatusCode(500, "Internal server error" + ex);
+            }
+        }
+
+        // GET: api/events/tag/1
+        [HttpGet("tag/{id}", Name ="EventsByTag")]
+        public async Task<IActionResult> GetEventsByTag(int id)
+        {
+            try
+            {
+                int[] eventsId = await _repository.EventsTags.GetEventsByTag(id);
+                Event[] events = await _repository.Event.FindByCondition(p => eventsId.Contains(p.Id)).ToArrayAsync();
+                return Ok(events);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside EventsByTag action: {ex.Message}");
                 return StatusCode(500, "Internal server error" + ex);
             }
         }

@@ -21,5 +21,11 @@ namespace Repository
             int[] tagsIds = await FindByCondition(p => p.EventId.Equals(eventId)).Select(p => p.TagId).ToArrayAsync();
             return tagsIds;
         }
+
+        public async Task<int[]> GetEventsByTag(int tagId)
+        {
+            int[] eventsids = await FindByCondition(p => p.TagId.Equals(tagId)).Select(p => p.EventId).ToArrayAsync();
+            return eventsids;
+        }
     }
 }

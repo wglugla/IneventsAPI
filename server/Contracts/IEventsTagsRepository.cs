@@ -9,5 +9,6 @@ namespace Contracts
     public interface IEventsTagsRepository : IRepositoryBase<EventsTags>
     {
         Task<int[]> GetEventTagsAsync(int eventId);
+        Task<int[]> GetEventsByTag(int tagId);
     }
 }
