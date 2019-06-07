@@ -127,6 +127,38 @@ namespace server.Controllers
                 return NotFound();
             }
         }
+
+        // PUT api/users/{id}/tags
+        [HttpPut("{id}/tags")]
+        public async Task<IActionResult> ChangeUserTags(int id, [FromBody]int[] tagIds)
+        {
+            try
+            {
+                UsersTags[] oldTags = await _repository.UsersTags.FindByCondition(p => p.UserId.Equals(id)).ToArrayAsync();
+                foreach(UsersTags tag in oldTags)
+                {
+                    _repository.UsersTags.Delete(tag);
+                }
+                await _repository.UsersTags.SaveAsync();
+
+                foreach(int i in tagIds)
+                {
+                    UsersTags newTag = new UsersTags()
+                    {
+                        UserId = id,
+                        TagId = i
+                    };
+                    _repository.UsersTags.Create(newTag);
+                }
+                await _repository.UsersTags.SaveAsync();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
         // POST api/users
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody]User user)
