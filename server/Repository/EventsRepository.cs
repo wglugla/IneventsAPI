@@ -35,9 +35,10 @@ namespace Repository
         }
 
 
-        public Task CreateEventAsync(Event eventTarget)
+        public async Task CreateEventAsync(Event eventTarget)
         {
-            throw new NotImplementedException();
+            Create(eventTarget);
+            await SaveAsync();
         }
 
         public Task DeleteEventAsync(Event ueventTarget)

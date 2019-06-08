@@ -132,11 +132,20 @@ namespace server.Controllers
             }
         }
 
-        //// POST: api/Events
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+        // POST: api/Events
+        [HttpPost]
+        public async Task<IActionResult> CreateEvent([FromBody] Event newEvent)
+        {
+            try
+            {
+                return CreatedAtRoute("EventById", new { id = newEvent.Id }, newEvent);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Internal server error" + e); 
+            }
+        }
 
         //// PUT: api/Events/5
         //[HttpPut("{id}")]
