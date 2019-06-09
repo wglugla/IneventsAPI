@@ -169,6 +169,36 @@ namespace server.Controllers
             }
         }
 
+        [HttpPut("{id}/tags")]
+        public async Task<IActionResult> ChangeEventTags(int id, [FromBody]int[] tagIds)
+        {
+            try
+            {
+                EventsTags[] oldTags = await _repository.EventsTags.FindByCondition(p => p.EventId.Equals(id)).ToArrayAsync();
+                foreach (EventsTags tag in oldTags)
+                {
+                    _repository.EventsTags.Delete(tag);
+                }
+                await _repository.EventsTags.SaveAsync();
+
+                foreach (int i in tagIds)
+                {
+                    EventsTags newTag = new EventsTags()
+                    {
+                        EventId = id,
+                        TagId = i
+                    };
+                    _repository.EventsTags.Create(newTag);
+                }
+                await _repository.EventsTags.SaveAsync();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
         //// PUT: api/Events/5
         //[HttpPut("{id}")]
         //public void Put(int id, [FromBody] string value)
