@@ -87,6 +87,27 @@ namespace server.Controllers
             }
         }
 
+        // POST: api/events/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEvent (int id)
+        {
+            try
+            {
+                Event target = await _repository.Event.GetEventByIdAsync(id);
+                if (target == null)
+                {
+                    return NotFound();
+                }
+                await _repository.Event.DeleteEventAsync(target);
+                _repository.Save();
+                return Ok("Event successfully deleted");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         // POST: api/events/addmember
         [HttpPost("{eventId}/addmember")]
         public async Task<IActionResult> AddMember(int eventId, [FromBody]UsersEvents userId)
@@ -138,8 +159,9 @@ namespace server.Controllers
         {
             try
             {
+                await _repository.Event.CreateEventAsync(newEvent);
                 return CreatedAtRoute("EventById", new { id = newEvent.Id }, newEvent);
-                return Ok();
+
             }
             catch (Exception e)
             {

@@ -41,9 +41,10 @@ namespace Repository
             await SaveAsync();
         }
 
-        public Task DeleteEventAsync(Event ueventTarget)
+        public async Task DeleteEventAsync(Event eventTarget)
         {
-            throw new NotImplementedException();
+            Delete(eventTarget);
+            await SaveAsync();
         }
 
     }

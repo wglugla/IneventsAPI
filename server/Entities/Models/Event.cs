@@ -28,7 +28,7 @@ namespace Entities.Models
         public string Place { get; set; }
 
         [Column("description")]
-        [StringLength(255, ErrorMessage = "Description can't be longer than 255 characters")]
+        [StringLength(1000, ErrorMessage = "Description can't be longer than 1000 characters")]
         public string Description { get; set; }
     }
 }
