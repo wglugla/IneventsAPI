@@ -47,5 +47,11 @@ namespace Repository
             await SaveAsync();
         }
 
+        public async Task ModifyEventAsync(Event modified)
+        {
+            Update(modified);
+            await SaveAsync();
+        }
+
     }
 }

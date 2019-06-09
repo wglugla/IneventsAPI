@@ -108,6 +108,30 @@ namespace server.Controllers
             }
         }
 
+        // PUT: api/events/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> ModifyEvent (int id, [FromBody]Event ev)
+        {
+            try
+            {
+                Event target = await _repository.Event.GetEventByIdAsync(id);
+                if (target == null)
+                {
+                    return NotFound();
+                }
+                target.Title = ev.Title;
+                target.Description = ev.Description;
+                target.Date = ev.Date;
+                target.Place = ev.Place;
+                await _repository.Event.ModifyEventAsync(target);
+                return Ok("Event successfully modified");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         // POST: api/events/addmember
         [HttpPost("{eventId}/addmember")]
         public async Task<IActionResult> AddMember(int eventId, [FromBody]UsersEvents userId)

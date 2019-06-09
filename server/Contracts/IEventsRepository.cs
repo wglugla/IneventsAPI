@@ -12,5 +12,6 @@ namespace Contracts
         Task<Event> GetEventByIdAsync(int eventId);
         Task CreateEventAsync(Event eventTarget);
         Task DeleteEventAsync(Event eventTarget);
+        Task ModifyEventAsync(Event modified);
     }
 }
