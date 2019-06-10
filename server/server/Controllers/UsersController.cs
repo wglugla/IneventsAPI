@@ -25,7 +25,18 @@ namespace server.Controllers
             _repository = repository;
         }
 
-        // GET api/users
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /users
+        ///     
+        /// </remarks>
+        /// <response code="200"> Array of users </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="500"> Internal server error </response>
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -44,7 +55,18 @@ namespace server.Controllers
             }
         }
 
-        // GET api/users/{id}/created
+        /// <summary>
+        /// Get events created by user
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /users/1/created
+        ///     
+        /// </remarks>
+        /// <response code="200"> Array of events created by user </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="500"> Internal server error </response>
         [HttpGet("{id}/created")]
         public async Task<IActionResult> GetEventsByUser(int id)
         {
@@ -59,10 +81,19 @@ namespace server.Controllers
             }
         }
 
-        // GET api/users/5
-        // Authentication: bearer token!
+        /// <summary>
+        /// Get user by id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /users/1
+        ///     
+        /// </remarks>
+        /// <response code="200"> User object </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="500"> Internal server error </response>
         [HttpGet("{id}", Name = "UserById")]
-        // [Authorize]
         public async Task<IActionResult> GetUserById(int id)
         {
             try
@@ -91,7 +122,18 @@ namespace server.Controllers
             }
         }
 
-        // GET api/users/{id}/signed
+        /// <summary>
+        /// Get events in which user takes part in
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /users/1/signed
+        ///     
+        /// </remarks>
+        /// <response code="200"> Array of events </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="500"> Internal server error </response>
         [HttpGet("{id}/signed")]
         public async Task<IActionResult> GetUserSignedEvents(int id)
         {
@@ -112,7 +154,18 @@ namespace server.Controllers
             }
         }
 
-        // GET api/users/{id}/signedId
+        /// <summary>
+        /// Get events ids in which user takes part in
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /users/1/signedId
+        ///     
+        /// </remarks>
+        /// <response code="200"> Array of events ids </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="500"> Internal server error </response>
         [HttpGet("{id}/signedId")]
         public async Task<IActionResult> GetUserSignedEventsId(int id)
         {
@@ -127,7 +180,18 @@ namespace server.Controllers
             }
         }
 
-        // GET api/users/{id}/tags
+        /// <summary>
+        /// Get user tags
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /users/1/tags
+        ///     
+        /// </remarks>
+        /// <response code="200"> Array of tags </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="500"> Internal server error </response>
         [HttpGet("{id}/tags")]
         public async Task<IActionResult> GetUserTags(int id)
         {
@@ -143,7 +207,18 @@ namespace server.Controllers
             }
         }
 
-        // PUT api/users/{id}/tags
+        /// <summary>
+        /// Update user tags
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /users/1/tags
+        ///     
+        /// </remarks>
+        /// <response code="200"> Tags successfully updated </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="500"> Internal server error </response>
         [HttpPut("{id}/tags")]
         public async Task<IActionResult> ChangeUserTags(int id, [FromBody]int[] tagIds)
         {
@@ -174,7 +249,19 @@ namespace server.Controllers
             }
         }
 
-        // POST api/users
+        /// <summary>
+        /// Create new user
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /users
+        ///     
+        /// </remarks>
+        /// <response code="201"> User successfully required </response>
+        /// <response code="400"> Bad request </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="500"> Internal server error </response>
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody]User user)
         {
@@ -206,7 +293,19 @@ namespace server.Controllers
             }
         }
 
-        // DELETE api/users
+        /// <summary>
+        /// Delete user
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE /users/1
+        ///     
+        /// </remarks>
+        /// <response code="201"> User successfully required </response>
+        /// <response code="404"> Not found </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="500"> Internal server error </response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {

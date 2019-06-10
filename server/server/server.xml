@@ -1,0 +1,314 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>server</name>
+    </assembly>
+    <members>
+        <member name="M:server.Controllers.EventsController.GetAllEvents">
+             <summary>
+             Return all events in database
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 GET /events
+                 
+             </remarks>
+             <returns> Array of events </returns>
+             <response code="200"> Return all events </response>
+             <response code="400">If the item is null</response> 
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.EventsController.GetEventsByTag(System.Int32)">
+             <summary>
+             Find event by tag id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 GET /events/tag/1
+                 
+             </remarks>
+             <returns> Array of events includes tag </returns>
+             <response code="200"> Return event object </response>
+             <response code="400"> If array is null </response> 
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.EventsController.GetEventById(System.Int32)">
+             <summary>
+             Find event by id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 GET /events/1
+                 
+             </remarks>
+             <returns> Event object </returns>
+             <response code="200"> Return event object </response>
+             <response code="400"> If the item is null </response> 
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.EventsController.DeleteEvent(System.Int32)">
+             <summary>
+             Delete event
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 DELETE /events/1
+                 
+             </remarks>
+             <response code="200"> Event successfully deleted </response>
+             <response code="401"> Unauthorized </response>
+             <response code="404"> Not found </response> 
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.EventsController.ModifyEvent(System.Int32,Entities.Models.Event)">
+             <summary>
+             Update event
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 PUT /events/1
+                 
+             </remarks>
+             <response code="200"> Event successfully modified </response>
+             <response code="401"> Unauthorized </response>
+             <response code="404"> Not found </response> 
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.EventsController.AddMember(System.Int32,Entities.Models.UsersEvents)">
+             <summary>
+             Add user to event
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /events/1/addmember
+                 
+             </remarks>
+             <response code="200"> User successfully added </response>
+             <response code="401"> Unauthorized </response>
+             <response code="404"> Not found </response> 
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.EventsController.RemoveMember(System.Int32,System.Int32)">
+             <summary>
+             Remove member from event
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 DELETE /events/1/removemember
+                 
+             </remarks>
+             <response code="200"> User successfully removed </response>
+             <response code="401"> Unauthorized </response>
+             <response code="404"> Not found </response> 
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.EventsController.CreateEvent(Entities.Models.Event)">
+             <summary>
+             Create new wevent
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /events
+                 
+             </remarks>
+             <response code="201"> Event successfully created </response>
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.EventsController.ChangeEventTags(System.Int32,System.Int32[])">
+             <summary>
+             Add tags to event
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 PUT /events/1/tags
+                 
+             </remarks>
+             <response code="200"> Tags successfully added </response>
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.LoginController.Login(Entities.Models.User)">
+             <summary>
+             Login to system
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /login
+                 
+             </remarks>
+             <response code="200"> Success. Returns login and JSON web token </response>
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.TagsController.GetAllTags">
+             <summary>
+             Get all tags
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 GET /tags
+                 
+             </remarks>
+             <response code="200"> Array of tags </response>
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.TagsController.GetTagById(System.Int32)">
+             <summary>
+             Get tag by id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 GET /tags/1
+                 
+             </remarks>
+             <response code="200"> Tag object </response>
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.UsersController.GetAllUsers">
+             <summary>
+             Get all users
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 GET /users
+                 
+             </remarks>
+             <response code="200"> Array of users </response>
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.UsersController.GetEventsByUser(System.Int32)">
+             <summary>
+             Get events created by user
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 GET /users/1/created
+                 
+             </remarks>
+             <response code="200"> Array of events created by user </response>
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.UsersController.GetUserById(System.Int32)">
+             <summary>
+             Get user by id
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 GET /users/1
+                 
+             </remarks>
+             <response code="200"> User object </response>
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.UsersController.GetUserSignedEvents(System.Int32)">
+             <summary>
+             Get events in which user takes part in
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 GET /users/1/signed
+                 
+             </remarks>
+             <response code="200"> Array of events </response>
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.UsersController.GetUserSignedEventsId(System.Int32)">
+             <summary>
+             Get events ids in which user takes part in
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 GET /users/1/signedId
+                 
+             </remarks>
+             <response code="200"> Array of events ids </response>
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.UsersController.GetUserTags(System.Int32)">
+             <summary>
+             Get user tags
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 GET /users/1/tags
+                 
+             </remarks>
+             <response code="200"> Array of tags </response>
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.UsersController.ChangeUserTags(System.Int32,System.Int32[])">
+             <summary>
+             Update user tags
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 PUT /users/1/tags
+                 
+             </remarks>
+             <response code="200"> Tags successfully updated </response>
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.UsersController.CreateUser(Entities.Models.User)">
+             <summary>
+             Create new user
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /users
+                 
+             </remarks>
+             <response code="201"> User successfully required </response>
+             <response code="400"> Bad request </response>
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+        <member name="M:server.Controllers.UsersController.DeleteUser(System.Int32)">
+             <summary>
+             Delete user
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 DELETE /users/1
+                 
+             </remarks>
+             <response code="201"> User successfully required </response>
+             <response code="404"> Not found </response>
+             <response code="401"> Unauthorized </response>
+             <response code="500"> Internal server error </response>
+        </member>
+    </members>
+</doc>

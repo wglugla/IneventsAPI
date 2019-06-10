@@ -69,6 +69,9 @@ namespace server
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Inevent API", Description = "Swagger Inevent API" });
+
+                var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + @"server.xml";
+                c.IncludeXmlComments(xmlPath);
             });
 
 

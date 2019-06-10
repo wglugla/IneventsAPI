@@ -36,6 +36,18 @@ namespace server.Controllers
             encryptor = new Encryption(repository);
         }
 
+        /// <summary>
+        /// Login to system
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /login
+        ///     
+        /// </remarks>
+        /// <response code="200"> Success. Returns login and JSON web token </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="500"> Internal server error </response>
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] User userData)
         {

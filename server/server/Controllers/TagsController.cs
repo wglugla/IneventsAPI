@@ -22,7 +22,18 @@ namespace server.Controllers
             _repository = repository;
         }
 
-        // GET: api/Tags
+        /// <summary>
+        /// Get all tags
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /tags
+        ///     
+        /// </remarks>
+        /// <response code="200"> Array of tags </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="500"> Internal server error </response>
         [HttpGet]
         public async Task<ActionResult> GetAllTags()
         {
@@ -41,7 +52,18 @@ namespace server.Controllers
             }
         }
 
-        // GET: api/Tags/5
+        /// <summary>
+        /// Get tag by id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /tags/1
+        ///     
+        /// </remarks>
+        /// <response code="200"> Tag object </response>
+        /// <response code="401"> Unauthorized </response>
+        /// <response code="500"> Internal server error </response>
         [HttpGet("{id}", Name = "Get")]
         public async Task<ActionResult> GetTagById(int id)
         {
@@ -59,23 +81,5 @@ namespace server.Controllers
                 return StatusCode(500, "Internal server error" + ex);
             }
         }
-
-        //// POST: api/Tags
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT: api/Tags/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
