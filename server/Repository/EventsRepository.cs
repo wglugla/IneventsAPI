@@ -26,7 +26,7 @@ namespace Repository
                 p.Place,
                 p.Date,
                 p.Description
-            }).ToListAsync();
+            }).OrderBy(p => p.Date).ToListAsync();
         }
 
         public async Task<Event> GetEventByIdAsync(int eventId)

@@ -40,7 +40,22 @@ namespace server.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside GetAllOwners action: {ex.Message}");
-                return StatusCode(500, "Internal server error" + ex);
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        // GET api/users/{id}/created
+        [HttpGet("{id}/created")]
+        public async Task<IActionResult> GetEventsByUser(int id)
+        {
+            try
+            {
+                Event[] events = await _repository.Event.FindByCondition(p => p.OwnerId.Equals(id)).ToArrayAsync();
+                return Ok(events);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
             }
         }
 
