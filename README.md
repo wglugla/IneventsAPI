@@ -1,2 +1,2 @@
-# noteweatherAPI
+# IneventsAPI
 University project
